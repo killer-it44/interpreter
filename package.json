@@ -1,0 +1,19 @@
+{
+  "name": "learn",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js",
+    "test": "jasmine *.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^4.0.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

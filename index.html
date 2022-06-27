@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body style='margin: 0;'>
+    <canvas id='cv'></canvas>
+    <script type='module'>
+        import Player from './player.js'
+
+        document.addEventListener('keydown', (event) => {
+            console.log(event.code)
+            if (event.code === 'Space') {
+                player.move()
+                drawWorld()
+            } else if (event.code === 'Slash') {
+                player.turn()
+                drawWorld()
+            } else if (event.key === 'ArrowLeft') {
+
+            } else if (event.key === 'ArrowRight') {
+
+            }
+        })
+
+        const canvas = document.getElementById('cv')
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        const ctx = canvas.getContext('2d')
+
+        const unitsX = 20
+        const unitSize = window.innerWidth / unitsX
+        const unitsY = Math.floor(window.innerHeight / unitSize)
+
+        const drawLine = (from, to) => {
+            ctx.moveTo(from[0], from[1])
+            ctx.lineTo(to[0], to[1])
+            ctx.stroke()
+        }
+
+        const drawGrid = () => {
+            ctx.lineWidth = .5
+            for (let x = 0; x < window.innerWidth; x += unitSize) {
+                drawLine([x, 0], [x, unitsY * unitSize])
+            }
+            for (let y = 0; y < window.innerHeight; y += unitSize) {
+                drawLine([0, y], [unitsX * unitSize, y])
+            }
+        }
+
+        const drawPlayer = () => {
+            ctx.font = `${unitSize}px Arial`
+            const pos = player.getPosition()
+            ctx.translate(pos.x * unitSize + unitSize / 2, pos.y * unitSize + unitSize / 2)
+            ctx.rotate((Math.PI / 180) * player.getDirection())
+            ctx.translate(-pos.x * unitSize - unitSize / 2, -pos.y * unitSize - unitSize / 2)
+            ctx.fillText('🐰', pos.x * unitSize, (pos.y + 0.9) * unitSize)
+        }
+
+        const drawWorld = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid()
+            drawPlayer()
+        }
+
+        const player = new Player()
+        player.move()
+        player.turn()
+        drawWorld()
+    </script>
+</body>
+
+</html>
